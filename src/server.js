@@ -23,6 +23,14 @@ app.get("/debug/ip", (req, res) => {
   });
 });
 
+app.get("/debug/env", (req, res) => {
+  res.json({
+    temDatabaseUrl: Boolean(process.env.DATABASE_URL),
+    temJwtSecret: Boolean(process.env.JWT_SECRET),
+    vercelEnv: process.env.VERCEL_ENV ?? null,
+  });
+});
+
 app.use("/auth", authRoutes);
 app.use("/gastos", gastosRoutes);
 
