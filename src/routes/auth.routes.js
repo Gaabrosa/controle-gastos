@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const rateLimit = require("express-rate-limit");
+const { ipKeyGenerator } = require("express-rate-limit");
 const authController = require("../controllers/auth.controller");
 
 const limiteAuth = rateLimit({
@@ -9,7 +10,8 @@ const limiteAuth = rateLimit({
   legacyHeaders: false,
   // Na Vercel, req.ip pode não refletir o cliente real dependendo do número de
   // saltos de proxy; x-real-ip é definido pela própria Vercel com o IP real.
-  keyGenerator: (req) => req.headers["x-real-ip"]?.toString() ?? req.ip,
+  // ipKeyGenerator normaliza o valor (necessário para não abrir brecha com IPv6).
+  keyGenerator: (req) => ipKeyGenerator(req.headers["x-real-ip"]?.toString() ?? req.ip),
   message: { erro: "Muitas tentativas. Tente novamente mais tarde." },
 });
 

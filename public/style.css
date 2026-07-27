@@ -11,6 +11,9 @@
   --primaria-fraca: #eef2ff;
   --perigo: #dc2626;
   --perigo-fraca: #fef2f2;
+  --aviso: #b45309;
+  --aviso-fraca: #fffbeb;
+  --aviso-borda: #fde68a;
   --sombra: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.08);
 }
 
@@ -26,6 +29,9 @@
     --primaria-fraca: #1e2247;
     --perigo: #f87171;
     --perigo-fraca: #2a1a1a;
+    --aviso: #fbbf24;
+    --aviso-fraca: #2a2412;
+    --aviso-borda: #4d3d13;
     --sombra: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.4);
   }
 }
@@ -132,6 +138,15 @@ body {
   font-size: 1rem;
   font-weight: 600;
   margin: 0 0 1rem;
+}
+
+.aviso {
+  background: var(--aviso-fraca);
+  border: 1px solid var(--aviso-borda);
+  color: var(--aviso);
+  border-radius: 0.75rem;
+  padding: 0.85rem 1rem;
+  font-size: 0.9rem;
 }
 
 /* Resumo / total */

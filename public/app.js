@@ -45,6 +45,7 @@ const estadoVazio = document.getElementById("estado-vazio");
 const totalGastos = document.getElementById("total-gastos");
 const mensagem = document.getElementById("mensagem");
 const formTitulo = document.getElementById("form-titulo");
+const avisoVencimento = document.getElementById("aviso-vencimento");
 
 const formatoMoeda = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
 const formatoData = new Intl.DateTimeFormat("pt-BR", { timeZone: "UTC" });
@@ -118,6 +119,28 @@ function renderizarGastos(gastos) {
 
   estadoVazio.hidden = gastos.length > 0;
   totalGastos.textContent = formatoMoeda.format(total);
+
+  mostrarAvisoVencimento(gastos);
+}
+
+function mostrarAvisoVencimento(gastos) {
+  const hoje = new Date();
+  const amanha = new Date(Date.UTC(hoje.getUTCFullYear(), hoje.getUTCMonth(), hoje.getUTCDate() + 1));
+  const amanhaISO = amanha.toISOString().slice(0, 10);
+
+  const vencendoAmanha = gastos.filter((gasto) => gasto.data.slice(0, 10) === amanhaISO);
+
+  if (vencendoAmanha.length === 0) {
+    avisoVencimento.hidden = true;
+    return;
+  }
+
+  const descricoes = vencendoAmanha.map((gasto) => escaparHtml(gasto.descricao)).join(", ");
+  avisoVencimento.innerHTML =
+    vencendoAmanha.length === 1
+      ? `<strong>Atenção:</strong> "${descricoes}" vence amanhã.`
+      : `<strong>Atenção:</strong> ${vencendoAmanha.length} gastos vencem amanhã: ${descricoes}.`;
+  avisoVencimento.hidden = false;
 }
 
 function escaparHtml(texto) {
