@@ -6,44 +6,49 @@
   <title>Entrar — Controle de Gastos</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body class="fundo-login">
   <main class="pagina-login">
-    <h1>Controle de Gastos</h1>
-
-    <div class="abas">
-      <button type="button" id="aba-login" class="aba ativa">Entrar</button>
-      <button type="button" id="aba-registrar" class="aba">Criar conta</button>
+    <div class="marca marca-central">
+      <span class="logo-mark">R$</span>
+      <h1>Controle de Gastos</h1>
     </div>
 
-    <form id="form-login">
-      <div class="campo">
-        <label for="login-email">Email</label>
-        <input type="email" id="login-email" required />
+    <div class="cartao">
+      <div class="abas">
+        <button type="button" id="aba-login" class="aba ativa">Entrar</button>
+        <button type="button" id="aba-registrar" class="aba">Criar conta</button>
       </div>
-      <div class="campo">
-        <label for="login-senha">Senha</label>
-        <input type="password" id="login-senha" required />
-      </div>
-      <button type="submit">Entrar</button>
-    </form>
 
-    <form id="form-registrar" hidden>
-      <div class="campo">
-        <label for="registrar-nome">Nome</label>
-        <input type="text" id="registrar-nome" required />
-      </div>
-      <div class="campo">
-        <label for="registrar-email">Email</label>
-        <input type="email" id="registrar-email" required />
-      </div>
-      <div class="campo">
-        <label for="registrar-senha">Senha (mín. 6 caracteres)</label>
-        <input type="password" id="registrar-senha" minlength="6" required />
-      </div>
-      <button type="submit">Criar conta</button>
-    </form>
+      <form id="form-login">
+        <div class="campo">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" placeholder="voce@exemplo.com" required />
+        </div>
+        <div class="campo">
+          <label for="login-senha">Senha</label>
+          <input type="password" id="login-senha" placeholder="••••••••" required />
+        </div>
+        <button type="submit" class="btn-primario btn-bloco">Entrar</button>
+      </form>
 
-    <p id="mensagem-login" role="status"></p>
+      <form id="form-registrar" hidden>
+        <div class="campo">
+          <label for="registrar-nome">Nome</label>
+          <input type="text" id="registrar-nome" placeholder="Seu nome" required />
+        </div>
+        <div class="campo">
+          <label for="registrar-email">Email</label>
+          <input type="email" id="registrar-email" placeholder="voce@exemplo.com" required />
+        </div>
+        <div class="campo">
+          <label for="registrar-senha">Senha (mín. 6 caracteres)</label>
+          <input type="password" id="registrar-senha" placeholder="••••••••" minlength="6" required />
+        </div>
+        <button type="submit" class="btn-primario btn-bloco">Criar conta</button>
+      </form>
+
+      <p id="mensagem-login" role="status"></p>
+    </div>
   </main>
 
   <script src="login.js"></script>

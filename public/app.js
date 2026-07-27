@@ -6,7 +6,9 @@ if (!token) {
 
 const API_URL = "/gastos";
 
-document.getElementById("usuario-nome").textContent = localStorage.getItem("usuarioNome") ?? "";
+const usuarioNome = localStorage.getItem("usuarioNome") ?? "";
+document.getElementById("usuario-nome").textContent = usuarioNome;
+document.getElementById("usuario-avatar").textContent = usuarioNome.trim().charAt(0).toUpperCase();
 
 document.getElementById("btn-sair").addEventListener("click", () => {
   localStorage.removeItem("token");
@@ -39,8 +41,10 @@ const campoData = document.getElementById("data");
 const btnSalvar = document.getElementById("btn-salvar");
 const btnCancelar = document.getElementById("btn-cancelar");
 const listaGastos = document.getElementById("lista-gastos");
+const estadoVazio = document.getElementById("estado-vazio");
 const totalGastos = document.getElementById("total-gastos");
 const mensagem = document.getElementById("mensagem");
+const formTitulo = document.getElementById("form-titulo");
 
 const formatoMoeda = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" });
 const formatoData = new Intl.DateTimeFormat("pt-BR", { timeZone: "UTC" });
@@ -56,6 +60,7 @@ function limparErro() {
 function sairModoEdicao() {
   form.reset();
   campoId.value = "";
+  formTitulo.textContent = "Novo gasto";
   btnSalvar.textContent = "Adicionar";
   btnCancelar.hidden = true;
 }
@@ -87,24 +92,31 @@ function renderizarGastos(gastos) {
   for (const gasto of gastos) {
     total += Number(gasto.valor);
 
-    const linha = document.createElement("tr");
-    linha.innerHTML = `
-      <td data-label="Descrição">${escaparHtml(gasto.descricao)}</td>
-      <td data-label="Categoria">${escaparHtml(gasto.categoria ?? "")}</td>
-      <td data-label="Data">${formatoData.format(new Date(gasto.data))}</td>
-      <td data-label="Valor">${formatoMoeda.format(gasto.valor)}</td>
-      <td data-label="Ações" class="col-acoes">
-        <button type="button" class="editar">Editar</button>
-        <button type="button" class="remover">Excluir</button>
-      </td>
+    const item = document.createElement("li");
+    item.className = "gasto";
+    item.innerHTML = `
+      <div class="gasto-info">
+        <span class="gasto-descricao">${escaparHtml(gasto.descricao)}</span>
+        <span class="gasto-meta">
+          ${gasto.categoria ? `${escaparHtml(gasto.categoria)} · ` : ""}${formatoData.format(new Date(gasto.data))}
+        </span>
+      </div>
+      <div class="gasto-lado">
+        <span class="gasto-valor">${formatoMoeda.format(gasto.valor)}</span>
+        <div class="gasto-acoes">
+          <button type="button" class="btn-icone editar" title="Editar">Editar</button>
+          <button type="button" class="btn-icone remover" title="Excluir">Excluir</button>
+        </div>
+      </div>
     `;
 
-    linha.querySelector(".editar").addEventListener("click", () => entrarModoEdicao(gasto));
-    linha.querySelector(".remover").addEventListener("click", () => removerGasto(gasto.id));
+    item.querySelector(".editar").addEventListener("click", () => entrarModoEdicao(gasto));
+    item.querySelector(".remover").addEventListener("click", () => removerGasto(gasto.id));
 
-    listaGastos.appendChild(linha);
+    listaGastos.appendChild(item);
   }
 
+  estadoVazio.hidden = gastos.length > 0;
   totalGastos.textContent = formatoMoeda.format(total);
 }
 
@@ -120,6 +132,7 @@ function entrarModoEdicao(gasto) {
   campoValor.value = gasto.valor;
   campoCategoria.value = gasto.categoria ?? "";
   campoData.value = gasto.data.slice(0, 10);
+  formTitulo.textContent = "Editar gasto";
   btnSalvar.textContent = "Salvar alterações";
   btnCancelar.hidden = false;
   campoDescricao.focus();

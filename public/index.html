@@ -7,68 +7,65 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main>
-    <div class="cabecalho">
-      <h1>Controle de Gastos</h1>
+  <div class="pagina">
+    <header class="cabecalho">
+      <div class="marca">
+        <span class="logo-mark">R$</span>
+        <h1>Controle de Gastos</h1>
+      </div>
       <div class="usuario-logado">
+        <span class="avatar" id="usuario-avatar"></span>
         <span id="usuario-nome"></span>
-        <button type="button" id="btn-sair">Sair</button>
+        <button type="button" id="btn-sair" class="btn-ghost">Sair</button>
       </div>
-    </div>
+    </header>
 
-    <form id="form-gasto">
-      <input type="hidden" id="gasto-id" />
+    <section class="cartao resumo">
+      <span class="resumo-rotulo">Total de gastos</span>
+      <span class="resumo-valor" id="total-gastos">R$ 0,00</span>
+    </section>
 
-      <div class="campo">
-        <label for="descricao">Descrição</label>
-        <input type="text" id="descricao" required />
-      </div>
+    <section class="cartao">
+      <h2 class="cartao-titulo" id="form-titulo">Novo gasto</h2>
 
-      <div class="campo">
-        <label for="valor">Valor (R$)</label>
-        <input type="number" id="valor" step="0.01" min="0" required />
-      </div>
+      <form id="form-gasto">
+        <input type="hidden" id="gasto-id" />
 
-      <div class="campo">
-        <label for="categoria">Categoria</label>
-        <input type="text" id="categoria" />
-      </div>
+        <div class="campo campo-larga">
+          <label for="descricao">Descrição</label>
+          <input type="text" id="descricao" placeholder="Ex: Mercado" required />
+        </div>
 
-      <div class="campo">
-        <label for="data">Data</label>
-        <input type="date" id="data" />
-      </div>
+        <div class="campo">
+          <label for="valor">Valor (R$)</label>
+          <input type="number" id="valor" step="0.01" min="0" placeholder="0,00" required />
+        </div>
 
-      <div class="acoes-form">
-        <button type="submit" id="btn-salvar">Adicionar</button>
-        <button type="button" id="btn-cancelar" hidden>Cancelar</button>
-      </div>
-    </form>
+        <div class="campo">
+          <label for="categoria">Categoria</label>
+          <input type="text" id="categoria" placeholder="Ex: Alimentação" />
+        </div>
 
-    <p id="mensagem" role="status"></p>
+        <div class="campo">
+          <label for="data">Data</label>
+          <input type="date" id="data" />
+        </div>
 
-    <div class="tabela-wrapper">
-      <table>
-        <thead>
-          <tr>
-            <th>Descrição</th>
-            <th>Categoria</th>
-            <th>Data</th>
-            <th>Valor</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody id="lista-gastos"></tbody>
-        <tfoot>
-          <tr>
-            <td colspan="3">Total</td>
-            <td id="total-gastos">R$ 0,00</td>
-            <td></td>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
-  </main>
+        <div class="acoes-form">
+          <button type="submit" id="btn-salvar" class="btn-primario">Adicionar</button>
+          <button type="button" id="btn-cancelar" class="btn-ghost" hidden>Cancelar</button>
+        </div>
+      </form>
+
+      <p id="mensagem" role="status"></p>
+    </section>
+
+    <section class="cartao">
+      <h2 class="cartao-titulo">Gastos</h2>
+      <ul id="lista-gastos" class="lista-gastos"></ul>
+      <p id="estado-vazio" class="estado-vazio" hidden>Nenhum gasto registrado ainda.</p>
+    </section>
+  </div>
 
   <script src="app.js"></script>
 </body>
