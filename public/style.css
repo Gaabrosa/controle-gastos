@@ -109,3 +109,87 @@ tfoot td {
   border-bottom: none;
   border-top: 2px solid var(--cor-borda);
 }
+
+.tabela-wrapper {
+  overflow-x: auto;
+}
+
+@media (max-width: 640px) {
+  body {
+    margin: 1rem auto;
+  }
+
+  form {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .campo,
+  .acoes-form {
+    width: 100%;
+  }
+
+  input,
+  button {
+    font-size: 1rem;
+    padding: 0.6rem;
+  }
+
+  .acoes-form {
+    flex-direction: column;
+  }
+
+  thead {
+    display: none;
+  }
+
+  table,
+  tbody,
+  tr,
+  td {
+    display: block;
+    width: 100%;
+  }
+
+  tr {
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    padding: 0.5rem;
+  }
+
+  td {
+    border-bottom: none;
+    padding: 0.35rem 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  td::before {
+    content: attr(data-label);
+    font-weight: bold;
+  }
+
+  td.col-acoes {
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+
+  td.col-acoes::before {
+    content: none;
+  }
+
+  tfoot tr {
+    border: none;
+    padding: 0;
+  }
+
+  tfoot td {
+    justify-content: space-between;
+  }
+
+  tfoot td[colspan]::before {
+    content: none;
+  }
+}

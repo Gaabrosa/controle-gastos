@@ -59,11 +59,11 @@ function renderizarGastos(gastos) {
 
     const linha = document.createElement("tr");
     linha.innerHTML = `
-      <td>${escaparHtml(gasto.descricao)}</td>
-      <td>${escaparHtml(gasto.categoria ?? "")}</td>
-      <td>${formatoData.format(new Date(gasto.data))}</td>
-      <td>${formatoMoeda.format(gasto.valor)}</td>
-      <td>
+      <td data-label="Descrição">${escaparHtml(gasto.descricao)}</td>
+      <td data-label="Categoria">${escaparHtml(gasto.categoria ?? "")}</td>
+      <td data-label="Data">${formatoData.format(new Date(gasto.data))}</td>
+      <td data-label="Valor">${formatoMoeda.format(gasto.valor)}</td>
+      <td data-label="Ações" class="col-acoes">
         <button type="button" class="editar">Editar</button>
         <button type="button" class="remover">Excluir</button>
       </td>
