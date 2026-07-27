@@ -6,6 +6,10 @@ const authRoutes = require("./routes/auth.routes");
 
 const app = express();
 
+if (process.env.VERCEL) {
+  app.set("trust proxy", 1);
+}
+
 app.use(helmet());
 app.use(express.json({ limit: "10kb" }));
 app.use(express.static(path.join(__dirname, "..", "public")));
@@ -27,8 +31,11 @@ app.use((erro, req, res, next) => {
   res.status(500).json({ erro: "Erro interno do servidor" });
 });
 
-const port = process.env.PORT || 3000;
+if (require.main === module) {
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => {
+    console.log(`Servidor rodando em http://localhost:${port}`);
+  });
+}
 
-app.listen(port, () => {
-  console.log(`Servidor rodando em http://localhost:${port}`);
-});
+module.exports = app;

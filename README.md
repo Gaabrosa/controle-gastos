@@ -82,6 +82,7 @@ curl -X POST http://localhost:3000/gastos \
 ## Estrutura do projeto
 
 ```
+api/index.js                          entry point usado pelo Vercel (reexporta o app do src/server.js)
 src/
   db.js                              pool de conexão com o PostgreSQL
   db/schema.sql                       schema das tabelas `usuarios` e `gastos`
@@ -90,10 +91,20 @@ src/
   routes/gastos.routes.js             rotas de gastos (protegidas pelo middleware de auth)
   controllers/auth.controller.js      lógica de registro/login (hash de senha, geração de token)
   controllers/gastos.controller.js    lógica de cada rota de gastos (sempre filtrada por usuario_id)
-  server.js                           ponto de entrada: monta o Express, serve o frontend e sobe o servidor
+  server.js                           monta o Express; sobe com app.listen local, ou é importado pelo api/index.js no Vercel
 public/
   login.html / login.js               tela de login e cadastro
   index.html                          página principal (exige login)
   style.css                           estilos
   app.js                              consome a API /gastos via fetch, envia o token, e trata logout/expiração
 ```
+
+## Deploy no Vercel
+
+1. Crie um banco Postgres na nuvem (ex: [Neon](https://neon.tech)) e copie a *connection string* (`postgresql://usuario:senha@host/banco?sslmode=require`).
+2. Aplique o schema nesse banco (`src/db/schema.sql`) — pode rodar localmente apontando `DATABASE_URL` pra ele.
+3. No [Vercel](https://vercel.com), importe este repositório do GitHub.
+4. Nas variáveis de ambiente do projeto (Project Settings → Environment Variables), defina:
+   - `DATABASE_URL` — a connection string do passo 1
+   - `JWT_SECRET` — uma string aleatória longa (não reaproveite a do `.env` local)
+5. Deploy. O `vercel.json` já redireciona todas as rotas para `api/index.js`, que reaproveita o mesmo `src/server.js` usado localmente.
