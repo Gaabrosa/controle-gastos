@@ -14,23 +14,6 @@ app.use(helmet());
 app.use(express.json({ limit: "10kb" }));
 app.use(express.static(path.join(__dirname, "..", "public")));
 
-app.get("/debug/ip", (req, res) => {
-  res.json({
-    reqIp: req.ip,
-    xRealIp: req.headers["x-real-ip"],
-    xForwardedFor: req.headers["x-forwarded-for"],
-    vercelForwardedFor: req.headers["x-vercel-forwarded-for"],
-  });
-});
-
-app.get("/debug/env", (req, res) => {
-  res.json({
-    temDatabaseUrl: Boolean(process.env.DATABASE_URL),
-    temJwtSecret: Boolean(process.env.JWT_SECRET),
-    vercelEnv: process.env.VERCEL_ENV ?? null,
-  });
-});
-
 app.use("/auth", authRoutes);
 app.use("/gastos", gastosRoutes);
 

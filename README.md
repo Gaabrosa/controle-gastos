@@ -108,3 +108,5 @@ public/
    - `DATABASE_URL` — a connection string do passo 1
    - `JWT_SECRET` — uma string aleatória longa (não reaproveite a do `.env` local)
 5. Deploy. O `vercel.json` já redireciona todas as rotas para `api/index.js`, que reaproveita o mesmo `src/server.js` usado localmente.
+6. Use a URL fixa do projeto (**Settings → Domains**, algo como `<projeto>-<time>.vercel.app`) para acessar em produção — a URL de cada deploy individual (com um código aleatório no meio) fica congelada na versão daquele deploy e não recebe atualizações futuras.
+7. Sempre que adicionar/alterar uma variável de ambiente depois do primeiro deploy, é preciso refazer o deploy (Deployments → ⋯ → Redeploy) para ela ter efeito.
