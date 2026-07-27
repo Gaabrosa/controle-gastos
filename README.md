@@ -1,6 +1,6 @@
 # Controle de Gastos
 
-API para controle de gastos pessoais, construída com Node.js, Express e PostgreSQL.
+Aplicação para controle de gastos pessoais, com API em Node.js/Express/PostgreSQL e um frontend simples em HTML/CSS/JS.
 
 ## Tecnologias
 
@@ -39,7 +39,7 @@ npm start   # produção
 npm run dev # desenvolvimento, reinicia automaticamente ao salvar arquivos
 ```
 
-O servidor sobe em `http://localhost:3000` (ou na porta definida em `PORT` no `.env`).
+O servidor sobe em `http://localhost:3000` (ou na porta definida em `PORT` no `.env`). Abra essa URL no navegador para usar o frontend (listar, adicionar, editar e excluir gastos).
 
 ## Rotas
 
@@ -69,5 +69,9 @@ src/
   db/schema.sql                schema da tabela `gastos`
   routes/gastos.routes.js      definição das rotas
   controllers/gastos.controller.js  lógica de cada rota (queries ao banco)
-  server.js                    ponto de entrada: monta o Express e sobe o servidor
+  server.js                    ponto de entrada: monta o Express, serve o frontend e sobe o servidor
+public/
+  index.html                  página única do frontend
+  style.css                    estilos
+  app.js                       consome a API /gastos via fetch (listar, criar, editar, excluir)
 ```
