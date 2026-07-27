@@ -362,28 +362,24 @@ button {
   grid-template-columns: 1fr;
 }
 
-.abas {
-  display: flex;
-  gap: 0.4rem;
-  padding: 0.25rem;
-  background: var(--bg);
-  border: 1px solid var(--borda);
-  border-radius: 0.7rem;
-  margin-bottom: 1.25rem;
-}
-
-.aba {
-  flex: 1;
-  background: transparent;
+.alternar-modo {
+  text-align: center;
+  font-size: 0.85rem;
   color: var(--texto-suave);
-  padding: 0.45rem;
-  border-radius: 0.5rem;
+  margin: 1rem 0 0;
 }
 
-.aba.ativa {
-  background: var(--superficie);
-  color: var(--texto);
-  box-shadow: var(--sombra);
+.link-botao {
+  background: transparent;
+  color: var(--primaria);
+  padding: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.link-botao:hover {
+  color: var(--primaria-hover);
+  text-decoration: underline;
 }
 
 /* Telas pequenas */

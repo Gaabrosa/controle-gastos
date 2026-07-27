@@ -2,22 +2,26 @@ if (localStorage.getItem("token")) {
   window.location.href = "index.html";
 }
 
-const abaLogin = document.getElementById("aba-login");
-const abaRegistrar = document.getElementById("aba-registrar");
+const titulo = document.getElementById("titulo-login");
 const formLogin = document.getElementById("form-login");
 const formRegistrar = document.getElementById("form-registrar");
 const mensagem = document.getElementById("mensagem-login");
+const textoAlternar = document.getElementById("texto-alternar");
+const btnAlternar = document.getElementById("btn-alternar");
 
-abaLogin.addEventListener("click", () => alternarAba(true));
-abaRegistrar.addEventListener("click", () => alternarAba(false));
+let modoLogin = true;
 
-function alternarAba(mostrarLogin) {
+btnAlternar.addEventListener("click", () => {
+  modoLogin = !modoLogin;
   mensagem.textContent = "";
-  formLogin.hidden = !mostrarLogin;
-  formRegistrar.hidden = mostrarLogin;
-  abaLogin.classList.toggle("ativa", mostrarLogin);
-  abaRegistrar.classList.toggle("ativa", !mostrarLogin);
-}
+
+  formLogin.hidden = !modoLogin;
+  formRegistrar.hidden = modoLogin;
+
+  titulo.textContent = modoLogin ? "Entrar" : "Criar conta";
+  textoAlternar.textContent = modoLogin ? "Não tem conta?" : "Já tem conta?";
+  btnAlternar.textContent = modoLogin ? "Criar uma" : "Entrar";
+});
 
 async function autenticar(url, corpo) {
   mensagem.textContent = "";
