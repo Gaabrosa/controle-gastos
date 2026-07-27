@@ -1,11 +1,13 @@
 const path = require("node:path");
 const express = require("express");
+const helmet = require("helmet");
 const gastosRoutes = require("./routes/gastos.routes");
 const authRoutes = require("./routes/auth.routes");
 
 const app = express();
 
-app.use(express.json());
+app.use(helmet());
+app.use(express.json({ limit: "10kb" }));
 app.use(express.static(path.join(__dirname, "..", "public")));
 
 app.use("/auth", authRoutes);
@@ -17,6 +19,11 @@ app.use((req, res) => {
 
 app.use((erro, req, res, next) => {
   console.error(erro);
+
+  if (erro.type === "entity.too.large") {
+    return res.status(413).json({ erro: "Corpo da requisição muito grande" });
+  }
+
   res.status(500).json({ erro: "Erro interno do servidor" });
 });
 

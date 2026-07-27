@@ -2,12 +2,18 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const db = require("../db");
 
+const REGEX_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 async function registrar(req, res, next) {
   try {
     const { nome, email, senha } = req.body;
 
     if (!nome || !email || !senha) {
       return res.status(400).json({ erro: "nome, email e senha são obrigatórios" });
+    }
+
+    if (!REGEX_EMAIL.test(email)) {
+      return res.status(400).json({ erro: "email inválido" });
     }
 
     if (senha.length < 6) {

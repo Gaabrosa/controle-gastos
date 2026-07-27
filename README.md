@@ -8,6 +8,8 @@ Aplicação para controle de gastos pessoais, com API em Node.js/Express/Postgre
 - [pg](https://node-postgres.com/) — driver PostgreSQL
 - [bcryptjs](https://github.com/dcodeIO/bcrypt.js) — hash de senha
 - [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) — autenticação via token (JWT)
+- [helmet](https://helmetjs.github.io/) — cabeçalhos HTTP de segurança
+- [express-rate-limit](https://github.com/express-rate-limit/express-rate-limit) — limita tentativas de login/cadastro
 
 ## Pré-requisitos
 
