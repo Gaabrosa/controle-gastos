@@ -7,6 +7,9 @@ const limiteAuth = rateLimit({
   limit: 10,
   standardHeaders: true,
   legacyHeaders: false,
+  // Na Vercel, req.ip pode não refletir o cliente real dependendo do número de
+  // saltos de proxy; x-real-ip é definido pela própria Vercel com o IP real.
+  keyGenerator: (req) => req.headers["x-real-ip"]?.toString() ?? req.ip,
   message: { erro: "Muitas tentativas. Tente novamente mais tarde." },
 });
 
