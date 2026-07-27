@@ -1,4 +1,34 @@
+const token = localStorage.getItem("token");
+
+if (!token) {
+  window.location.href = "login.html";
+}
+
 const API_URL = "/gastos";
+
+document.getElementById("usuario-nome").textContent = localStorage.getItem("usuarioNome") ?? "";
+
+document.getElementById("btn-sair").addEventListener("click", () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("usuarioNome");
+  window.location.href = "login.html";
+});
+
+async function fetchAutenticado(url, opcoes = {}) {
+  const resposta = await fetch(url, {
+    ...opcoes,
+    headers: { ...opcoes.headers, Authorization: `Bearer ${token}` },
+  });
+
+  if (resposta.status === 401) {
+    localStorage.removeItem("token");
+    localStorage.removeItem("usuarioNome");
+    window.location.href = "login.html";
+    throw new Error("Não autenticado");
+  }
+
+  return resposta;
+}
 
 const form = document.getElementById("form-gasto");
 const campoId = document.getElementById("gasto-id");
@@ -35,7 +65,7 @@ async function carregarGastos() {
 
   let resposta;
   try {
-    resposta = await fetch(API_URL);
+    resposta = await fetchAutenticado(API_URL);
   } catch {
     mostrarErro("Não foi possível conectar ao servidor.");
     return;
@@ -98,7 +128,7 @@ function entrarModoEdicao(gasto) {
 async function removerGasto(id) {
   limparErro();
 
-  const resposta = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+  const resposta = await fetchAutenticado(`${API_URL}/${id}`, { method: "DELETE" });
 
   if (!resposta.ok) {
     mostrarErro("Erro ao excluir o gasto.");
@@ -123,7 +153,7 @@ form.addEventListener("submit", async (evento) => {
   const url = id ? `${API_URL}/${id}` : API_URL;
   const metodo = id ? "PUT" : "POST";
 
-  const resposta = await fetch(url, {
+  const resposta = await fetchAutenticado(url, {
     method: metodo,
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(corpo),

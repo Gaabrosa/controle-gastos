@@ -20,6 +20,62 @@ h1 {
   font-size: 1.5rem;
 }
 
+.cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.usuario-logado {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.usuario-logado button {
+  background: transparent;
+  color: inherit;
+  border: 1px solid var(--cor-borda);
+  padding: 0.3rem 0.75rem;
+  font-size: 0.85rem;
+}
+
+.pagina-login {
+  max-width: 360px;
+}
+
+.abas {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.aba {
+  flex: 1;
+  background: transparent;
+  color: inherit;
+  border: 1px solid var(--cor-borda);
+}
+
+.aba.ativa {
+  background: var(--cor-destaque);
+  color: white;
+  border-color: var(--cor-destaque);
+}
+
+.pagina-login form {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.pagina-login form button {
+  width: 100%;
+}
+
 form {
   display: flex;
   flex-wrap: wrap;

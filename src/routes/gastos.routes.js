@@ -1,7 +1,10 @@
 const { Router } = require("express");
 const gastosController = require("../controllers/gastos.controller");
+const autenticar = require("../middlewares/auth.middleware");
 
 const router = Router();
+
+router.use(autenticar);
 
 router.get("/", gastosController.listar);
 router.get("/:id", gastosController.buscarPorId);
