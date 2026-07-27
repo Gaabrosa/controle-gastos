@@ -14,6 +14,15 @@ app.use(helmet());
 app.use(express.json({ limit: "10kb" }));
 app.use(express.static(path.join(__dirname, "..", "public")));
 
+app.get("/debug/ip", (req, res) => {
+  res.json({
+    reqIp: req.ip,
+    xRealIp: req.headers["x-real-ip"],
+    xForwardedFor: req.headers["x-forwarded-for"],
+    vercelForwardedFor: req.headers["x-vercel-forwarded-for"],
+  });
+});
+
 app.use("/auth", authRoutes);
 app.use("/gastos", gastosRoutes);
 
