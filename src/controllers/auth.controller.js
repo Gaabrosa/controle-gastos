@@ -4,6 +4,10 @@ const db = require("../db");
 
 const REGEX_EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+// Hash bcrypt válido (sem correspondência real) usado para igualar o tempo de
+// resposta quando o email não existe, evitando enumeração de contas por timing.
+const HASH_FALSO = "$2a$10$CwTycUXWue0Thq9StjUM0uJ8gGhb0kwFPhNs4Mm3rjZNoJU4y1G8y";
+
 async function registrar(req, res, next) {
   try {
     const { nome, email, senha } = req.body;
@@ -55,9 +59,9 @@ async function login(req, res, next) {
     );
 
     const usuario = resultado.rows[0];
-    const senhaValida = usuario && (await bcrypt.compare(senha, usuario.senha_hash));
+    const senhaValida = await bcrypt.compare(senha, usuario ? usuario.senha_hash : HASH_FALSO);
 
-    if (!senhaValida) {
+    if (!usuario || !senhaValida) {
       return res.status(401).json({ erro: "Email ou senha inválidos" });
     }
 
@@ -73,7 +77,7 @@ async function login(req, res, next) {
 }
 
 function gerarToken(usuarioId) {
-  return jwt.sign({ usuarioId }, process.env.JWT_SECRET, { expiresIn: "7d" });
+  return jwt.sign({ usuarioId }, process.env.JWT_SECRET, { expiresIn: "7d", algorithm: "HS256" });
 }
 
 module.exports = { registrar, login };

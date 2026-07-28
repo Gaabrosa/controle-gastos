@@ -4,6 +4,10 @@ const helmet = require("helmet");
 const gastosRoutes = require("./routes/gastos.routes");
 const authRoutes = require("./routes/auth.routes");
 
+if (!process.env.JWT_SECRET) {
+  throw new Error("JWT_SECRET não está definido");
+}
+
 const app = express();
 
 if (process.env.VERCEL) {

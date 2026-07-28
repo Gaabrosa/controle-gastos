@@ -10,8 +10,14 @@ const limiteAuth = rateLimit({
   legacyHeaders: false,
   // Na Vercel, req.ip pode não refletir o cliente real dependendo do número de
   // saltos de proxy; x-real-ip é definido pela própria Vercel com o IP real.
+  // Fora da Vercel esse header vem do próprio cliente e pode ser forjado para
+  // burlar o rate limit, então só confiamos nele quando process.env.VERCEL
+  // está definido (mesma condição usada para "trust proxy" em server.js).
   // ipKeyGenerator normaliza o valor (necessário para não abrir brecha com IPv6).
-  keyGenerator: (req) => ipKeyGenerator(req.headers["x-real-ip"]?.toString() ?? req.ip),
+  keyGenerator: (req) => {
+    const ip = process.env.VERCEL ? req.headers["x-real-ip"]?.toString() ?? req.ip : req.ip;
+    return ipKeyGenerator(ip);
+  },
   message: { erro: "Muitas tentativas. Tente novamente mais tarde." },
 });
 
